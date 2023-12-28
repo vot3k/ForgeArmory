@@ -14,8 +14,7 @@ args:
     default: nil
   - name: ssh_key
     default: nil
-    
-    steps:
+steps:
   - name: ensure-aws-creds-present
     inline: |
       set -e
