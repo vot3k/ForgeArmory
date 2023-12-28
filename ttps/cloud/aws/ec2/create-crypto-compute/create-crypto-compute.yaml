@@ -149,24 +149,24 @@ args:
       # Create EC2 instance
       INSTANCE_ID=$(  create_ec2_instance {{ .Args.ec2_instance_id }})
       export INSTANCE_ID
-cleanup:
-inline: |
-  set -e
+    cleanup:
+      inline: |
+        set -e
 
-  aws_utils_path="/tmp/aws"
+        aws_utils_path="/tmp/aws"
 
-  # Source /tmp/aws
-  # shellcheck source=/dev/null
-  source "${aws_utils_path}"
+        # Source /tmp/aws
+        # shellcheck source=/dev/null
+        source "${aws_utils_path}"
 
-  # Only delete the ec2 instance if we created it.
-  if [[ "{{ .Args.ec2_instance_id }}" == nil ]]; then
-    INSTANCE_TO_TERMINATE="{{ .Args.ec2_instance_id }}"
+        # Only delete the ec2 instance if we created it.
+        if [[ "{{ .Args.ec2_instance_id }}" == nil ]]; then
+          INSTANCE_TO_TERMINATE="{{ .Args.ec2_instance_id }}"
 
-    if [[ -z "$INSTANCE_TO_TERMINATE" ]]; then
-        echo "No instance ID provided for termination."
-    else
-        terminate_instance "$INSTANCE_TO_TERMINATE"
-        echo "Terminated instance $INSTANCE_TO_TERMINATE."
-    fi
-  fi
+          if [[ -z "$INSTANCE_TO_TERMINATE" ]]; then
+              echo "No instance ID provided for termination."
+          else
+              terminate_instance "$INSTANCE_TO_TERMINATE"
+              echo "Terminated instance $INSTANCE_TO_TERMINATE."
+          fi
+        fi
